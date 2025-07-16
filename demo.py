@@ -2,7 +2,10 @@
 
 import time
 from selenium import webdriver
-#from webdriver_manager.firefox import GeckoDriverManager
+from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.firefox.service import Service
+import sys
+
 
 def click_element(xpath):
     driver.find_element("xpath", xpath).click()
@@ -146,5 +149,12 @@ def main():
     driver.quit()
 
 
-driver = webdriver.Firefox()
+if len(sys.argv) > 1 and sys.argv[1] == '--snap':
+    opts = Options()
+    firefox_path = "/snap/firefox/current/usr/lib/firefox/firefox"
+    opts.binary_location = firefox_path
+    geckodriver_path = Service(executable_path="/snap/firefox/current/usr/lib/firefox/geckodriver")
+    driver = webdriver.Chrome(service=geckodriver_path, options=opts)
+else:
+    driver = webdriver.Firefox()
 main()
