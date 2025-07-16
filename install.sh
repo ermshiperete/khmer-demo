@@ -9,7 +9,7 @@ wget https://github.com/mozilla/geckodriver/releases/download/v0.36.0/${GECKODRI
 (
   cd venv/bin
   tar xvf ../../${GECKODRIVER}
-  rm ${GECKODRIVER}
+  rm ../../${GECKODRIVER}
 )
 
 pip3 install selenium
