@@ -7,16 +7,25 @@ fi
 
 . venv/bin/activate
 
+ARGS=()
 if [[ -f venv/usesnap ]]; then
-  SNAP="--snap"
-else
-  SNAP=""
+  ARGS+=(--snap)
 fi
 
-URL=()
 while [[ $# -gt 0 ]]; do
   case $1 in
-    --snap) SNAP="--snap" ;;
+    --help|-h)
+      echo "Usage: $0 [--help] [--snap] [--local]"
+      echo ""
+      echo "Run demo"
+      echo ""
+      echo "Options:"
+      echo "  -h, --help  show this help message and exit"
+      echo "  --snap      Use Snap Firefox"
+      echo "  --local     use local copy of pheasakhmer.com"
+      exit 0
+      ;;
+    --snap) ARGS+=(--snap) ;;
     --local)
       trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT
       (
@@ -25,10 +34,13 @@ while [[ $# -gt 0 ]]; do
         jobs
       )
       jobs
-      URL=(--url http://localhost:8000)
+      ARGS+=(--url http://localhost:8000)
+      ;;
+    *)
+      ARGS+=("$1")
       ;;
   esac
   shift
 done
 
-./demo.py "${URL[@]}" ${SNAP}
+./demo.py "${ARGS[@]}"
