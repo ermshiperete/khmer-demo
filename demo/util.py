@@ -1,22 +1,17 @@
 #!/usr/bin/env python3
-
-import argparse
 import time
-from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.firefox.service import Service
-import sys
+import config
 
 
 def click_element(xpath, wait=True):
-    driver.find_element("xpath", xpath).click()
+    config.driver.find_element("xpath", xpath).click()
     if wait:
         time.sleep(1)
 
 
 def create_fullpage_overlay():
     # https://www.w3schools.com/howto/howto_css_overlay.asp
-    driver.execute_script("""
+    config.driver.execute_script("""
         const overlay = document.createElement("div");
         overlay.id = 'demo-fullpage-overlay';
         overlay.style['position'] = 'fixed';
@@ -47,7 +42,7 @@ def create_fullpage_overlay():
 
 def create_overlay():
     # https://www.w3schools.com/howto/howto_css_overlay.asp
-    driver.execute_script("""
+    config.driver.execute_script("""
         const overlay = document.createElement("div");
         overlay.id = 'demo-overlay';
         overlay.style['position'] = 'fixed';
@@ -76,41 +71,26 @@ def create_overlay():
 
 
 def set_overlay_text(text):
-    driver.execute_script(f"""
+    config.driver.execute_script(f"""
         document.getElementById('demo-text').innerText = '{text}';
         document.getElementById('demo-overlay').style['display'] = 'block';
         """)
 
 
 def hide_overlay():
-    driver.execute_script("document.getElementById('demo-overlay').style['display'] = 'none';")
+    config.driver.execute_script("document.getElementById('demo-overlay').style['display'] = 'none';")
 
 
-def select_and_run_example(example, text):
-    click_element("//div[@id='dropdown-examples']/ul/li/button[@data-examples='#example0']")
-    click_element(f"//div[@id='{example}']//button")
-    driver.execute_script(f"""
-        const textarea = document.getElementById('ta1');
-        const overlay = document.getElementById('demo-overlay');
-        const text = document.getElementById('demo-text');
-        textarea.onfocus = function() {{ text.innerText = 'got focus'; overlay.style['display'] = 'none'; }};
-        text.innerText = '{text}';
-        overlay.style['display'] = 'block';
-        """)
-    time.sleep(5)
-    hide_overlay()
-
-
-def show_overlay(text, length):
+def show_overlay(text, duration):
     set_overlay_text(text)
-    time.sleep(length)
+    time.sleep(duration)
     hide_overlay()
 
 
 def show_page(text, hide):
     speed = 100
     waittime = len(text) * speed / 1000 + 2
-    driver.execute_script(f"""
+    config.driver.execute_script(f"""
         document.getElementById('demo-fullpage-overlay').style['display'] = 'block';
         const textDiv = document.getElementById('demo-fullpage-text');
         textDiv.innerHTML = '';
@@ -131,37 +111,4 @@ def show_page(text, hide):
         """)
     time.sleep(waittime)
     if hide:
-        driver.execute_script("document.getElementById('demo-fullpage-overlay').style['display'] = 'none';")
-
-
-def rundemo(url):
-    driver.get(url)
-    create_fullpage_overlay()
-    create_overlay()
-    click_element("//label[@for='btn-language-english']", False)
-    click_element("//button[@id='help-ok']", False)
-    show_page('In Khmer (Sprache die in Kambodscha gesprochen wird) werden manche Vokale vor den Konsonanten geschrieben, aber danach gesprochen. Die Frage ist nun, wie schreibt man das am Computer: so wie es da steht (erst Vokal, dann Konsonant) oder so wie es gesprochen wird?', False)
-    show_page('Von der Darstellung macht es keinen Unterschied, aber es wird unterschiedlich gespeichert, und deshalb zeigen z.B. Suchen unterschiedliche Ergebnisse.', False)
-    show_page('Die folgende Demo zeigt einige Beispiele', True)
-    time.sleep(1)
-    click_element("//button[@id='btn-examples']")
-    select_and_run_example('example-1', 'richtige Reihenfolge')
-    time.sleep(5)
-    driver.quit()
-
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Run demo')
-    parser.add_argument('--snap', action='store_true', help='Use Snap Firefox')
-    parser.add_argument('--url', metavar='URL', default='https://ភាសាខ្មែរ.com/', help='Use alternate URL for pheasakhmer.com')
-    args = parser.parse_args()
-
-    if args.snap:
-        opts = Options()
-        firefox_path = "/snap/firefox/current/usr/lib/firefox/firefox"
-        opts.binary_location = firefox_path
-        geckodriver_path = Service(executable_path="/snap/firefox/current/usr/lib/firefox/geckodriver")
-        driver = webdriver.Chrome(service=geckodriver_path, options=opts)
-    else:
-        driver = webdriver.Firefox()
-    rundemo(args.url)
+        config.driver.execute_script("document.getElementById('demo-fullpage-overlay').style['display'] = 'none';")

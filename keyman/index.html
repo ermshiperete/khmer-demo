@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Keyman Logo</title>
+  <style>
+    body {
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+      background: #fff;
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      font-size: 40px;
+      overflow: hidden;
+    }
+    .animate-in {
+      animation: fadeIn .5s ease-in;
+    }
+    .animate-out {
+      transition: opacity .5s;
+      opacity: 0;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    #second {
+      top: 0;
+      left: 0;
+      position: fixed;
+      width: 100%;
+    }
+    #second div {
+      position: absolute;
+      margin: 80px;
+    }
+    img {
+      display: block;
+      margin-left: auto;
+      max-width: 100%;
+      height: 120px;
+      right: 0;
+    }
+    .hidden {
+      display: none;
+    }
+    .right {
+      display: block;
+      margin-left: auto;
+      right: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="first" class="animate-in">
+    <img src="keyman_banner.svg" alt="Keyman Logo" style="max-width: 100%; height: auto;">
+  </div>
+  <div id="second" class="hidden">
+    <div>
+      <img class="right" src="keyman_banner.svg" alt="Keyman Logo"/>
+      <p>Keyman erlaubt es, Tastaturlayouts für beliebige Sprachen zu erstellen und auf allen Plattformen (Windows, Mac, Linux, Android, iOS und im Browser) zu verwenden.</p>
+      <p>Keyman.com bietet 1000 Tastaturlayouts für über 2500 Sprachen.</p>
+    </div>
+  </div>
+</body>
+</html>

@@ -43,4 +43,4 @@ while [[ $# -gt 0 ]]; do
   shift
 done
 
-./demo.py "${ARGS[@]}"
+./demo/demo.py "${ARGS[@]}"
