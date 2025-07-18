@@ -8,9 +8,10 @@ from selenium.webdriver.firefox.service import Service
 import sys
 
 
-def click_element(xpath):
+def click_element(xpath, wait=True):
     driver.find_element("xpath", xpath).click()
-    time.sleep(1)
+    if wait:
+        time.sleep(1)
 
 
 def create_fullpage_overlay():
@@ -109,7 +110,6 @@ def show_overlay(text, length):
 def show_page(text, hide):
     speed = 100
     waittime = len(text) * speed / 1000 + 2
-    print(f'waitime={waittime} for {text}')
     driver.execute_script(f"""
         document.getElementById('demo-fullpage-overlay').style['display'] = 'block';
         const textDiv = document.getElementById('demo-fullpage-text');
@@ -138,14 +138,14 @@ def rundemo(url):
     driver.get(url)
     create_fullpage_overlay()
     create_overlay()
-    click_element("//label[@for='btn-language-english']")
-    click_element("//button[@id='help-ok']")
+    click_element("//label[@for='btn-language-english']", False)
+    click_element("//button[@id='help-ok']", False)
     show_page('In Khmer (Sprache die in Kambodscha gesprochen wird) werden manche Vokale vor den Konsonanten geschrieben, aber danach gesprochen. Die Frage ist nun, wie schreibt man das am Computer: so wie es da steht (erst Vokal, dann Konsonant) oder so wie es gesprochen wird?', False)
     show_page('Von der Darstellung macht es keinen Unterschied, aber es wird unterschiedlich gespeichert, und deshalb zeigen z.B. Suchen unterschiedliche Ergebnisse.', False)
     show_page('Die folgende Demo zeigt einige Beispiele', True)
     time.sleep(1)
     click_element("//button[@id='btn-examples']")
-    select_and_run_example('example-1', 'Hello world!')
+    select_and_run_example('example-1', 'richtige Reihenfolge')
     time.sleep(5)
     driver.quit()
 

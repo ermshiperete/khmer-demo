@@ -2,7 +2,11 @@
 
 set -eu
 
+DRIVER_VERSION=v0.36.0
+
 python3 -m venv venv
+
+# shellcheck disable=SC1091
 . venv/bin/activate
 
 if [[ "$1" == "--help" ]]; then
@@ -18,8 +22,8 @@ elif [[ "$1" == "--uninstall" ]]; then
 elif [[ "$1" == "--snap" ]]; then
   touch venv/usesnap
 else
-  GECKODRIVER=geckodriver-v0.36.0-linux64.tar.gz
-  wget https://github.com/mozilla/geckodriver/releases/download/v0.36.0/${GECKODRIVER}
+  GECKODRIVER=geckodriver-${DRIVER_VERSION}-linux64.tar.gz
+  wget https://github.com/mozilla/geckodriver/releases/download/${DRIVER_VERSION}/${GECKODRIVER}
 
   (
     cd venv/bin
