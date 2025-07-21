@@ -7,12 +7,17 @@ from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.service import Service
 import config
 from pheasakhmer import PheasaKhmer
+from keyman import Keyman
 
 
-def rundemo(url):
+def runKeyman():
+    demo = Keyman()
+    demo.rundemo('http://localhost:8050/index.html')
+
+
+def runPheasaKhmer(url):
     demo = PheasaKhmer()
     demo.rundemo(url)
-    config.driver.quit()
 
 
 if __name__ == '__main__':
@@ -31,4 +36,6 @@ if __name__ == '__main__':
     else:
         config.driver = webdriver.Firefox()
 
-    rundemo(args.url)
+    runKeyman()
+    runPheasaKhmer(args.url)
+    config.driver.quit()
