@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import time
 import config
+from selenium.webdriver.common.by import By
 
 
 def click_element(xpath, wait=True):
@@ -71,6 +72,9 @@ def create_overlay():
 
 
 def set_overlay_text(text):
+    if len(config.driver.find_elements(By.ID, 'demo-overlay')) <= 0:
+        create_overlay()
+
     config.driver.execute_script(f"""
         document.getElementById('demo-text').innerText = '{text}';
         document.getElementById('demo-overlay').style['display'] = 'block';
@@ -87,7 +91,10 @@ def show_overlay(text, duration):
     hide_overlay()
 
 
-def show_page(text, hide):
+def show_page_typewriter(text, hide):
+    if len(config.driver.find_elements(By.ID, 'demo-fullpage-overlay')) <= 0:
+        create_fullpage_overlay()
+
     speed = 100
     waittime = len(text) * speed / 1000 + 2
     config.driver.execute_script(f"""
@@ -112,3 +119,61 @@ def show_page(text, hide):
     time.sleep(waittime)
     if hide:
         config.driver.execute_script("document.getElementById('demo-fullpage-overlay').style['display'] = 'none';")
+
+
+def show_page(text, hide, waittime):
+    if len(config.driver.find_elements(By.ID, 'demo-fullpage-overlay')) <= 0:
+        create_fullpage_overlay()
+
+    config.driver.execute_script(f"""
+        document.getElementById('demo-fullpage-overlay').style['display'] = 'block';
+        const textDiv = document.getElementById('demo-fullpage-text');
+        textDiv.innerHTML = '{text}';
+        """)
+    time.sleep(waittime)
+    if hide:
+        config.driver.execute_script("document.getElementById('demo-fullpage-overlay').style['display'] = 'none';")
+
+
+def _create_progress_bar():
+    config.driver.execute_script("""
+        const bottom = document.createElement("div");
+        bottom.id = 'bottom';
+        bottom.style['width'] = '100%';
+        bottom.style['position'] = 'absolute';
+        bottom.style['bottom'] = 0;
+        const pbar = document.createElement("progress");
+        pbar.id = 'pbar';
+        pbar.style['width'] = '100%';
+        pbar.style['height'] = '5px';
+        pbar.style['position'] = 'relative';
+        pbar.style['bottom'] = 0;
+        pbar.style['background-color'] = 'white';
+        pbar.style['border'] = 'none';
+        pbar.style['color'] = 'blue';
+        bottom.appendChild(pbar);
+        document.body.appendChild(bottom);
+        """)
+
+
+def wait(seconds):
+    if len(config.driver.find_elements(By.ID, 'pbar')) <= 0:
+        _create_progress_bar()
+
+    config.driver.execute_script(f"""
+        const pbar = document.getElementById('pbar');
+        pbar.value = {seconds*10};
+        pbar.max = {seconds*10};
+        function start_countdown() {{
+            var reverse_counter = {seconds*10};
+            var downloadTimer = setInterval(function(){{
+                document.getElementById("pbar").value = --reverse_counter;
+                if(reverse_counter <= 0)
+                    clearInterval(downloadTimer);
+            }},100);
+        }}
+
+        start_countdown();
+        """)
+    time.sleep(seconds)
+

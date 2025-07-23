@@ -1,6 +1,6 @@
 import config
 import time
-from util import click_element, hide_overlay, create_fullpage_overlay, create_overlay, show_page
+from util import click_element, hide_overlay, create_fullpage_overlay, create_overlay, show_page_typewriter, wait
 
 class PheasaKhmer:
     def select_and_run_example(self, example, text):
@@ -15,7 +15,7 @@ class PheasaKhmer:
             text.innerText = '{text}';
             overlay.style['display'] = 'block';
             """)
-        time.sleep(5)
+        wait(5)
         hide_overlay()
 
 
@@ -23,15 +23,17 @@ class PheasaKhmer:
         config.driver.get(url)
         create_fullpage_overlay()
         create_overlay()
-        time.sleep(1)
+        wait(1)
         click_element("//label[@for='btn-language-english']", False)
-        time.sleep(1)
+        wait(1)
         click_element("//button[@id='help-ok']", False)
-        time.sleep(1)
-        show_page('In Khmer (Sprache die in Kambodscha gesprochen wird) werden manche Vokale vor den Konsonanten geschrieben, aber danach gesprochen. Die Frage ist nun, wie schreibt man das am Computer: so wie es da steht (erst Vokal, dann Konsonant) oder so wie es gesprochen wird?', False)
-        show_page('Von der Darstellung macht es keinen Unterschied, aber es wird unterschiedlich gespeichert, und deshalb zeigen z.B. Suchen unterschiedliche Ergebnisse.', False)
-        show_page('Die folgende Demo zeigt einige Beispiele', True)
-        time.sleep(1)
+        wait(1)
+        show_page_typewriter('Das Alphabet von Khmer hat 74 Buchstaben. Manche Vokale werden vor den Konsonanten geschrieben, aber danach gesprochen. Die Frage ist nun, wie schreibt man das am Computer: so wie es da steht (erst Vokal, dann Konsonant) oder so wie es gesprochen wird (erst Konsonant, dann Vokal)?', False)
+        show_page_typewriter('Bei der Anzeige macht es keinen Unterschied, aber es wird unterschiedlich gespeichert, und deshalb zeigen z.B. Suchen unterschiedliche Ergebnisse.', False)
+        show_page_typewriter('Das Wort ខ្មែរ („Khmer“) kann auf zwei Arten geschrieben werden:', True)
+        wait(1)
         click_element("//button[@id='btn-examples']")
         self.select_and_run_example('example-1', 'richtige Reihenfolge')
-        time.sleep(5)
+        wait(5)
+        self.select_and_run_example('example-2', 'falsche Reihenfolge')
+        wait(5)
