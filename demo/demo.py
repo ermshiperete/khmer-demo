@@ -12,7 +12,7 @@ from keyman import Keyman
 
 def runKeyman():
     demo = Keyman()
-    demo.rundemo('http://localhost:8050/index.html')
+    demo.rundemo('http://localhost:8050/keyman/index.html')
 
 
 def runPheasaKhmer(url):
@@ -23,8 +23,13 @@ def runPheasaKhmer(url):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Run demo')
     parser.add_argument('--snap', action='store_true', help='Use Snap Firefox')
-    parser.add_argument('--url', metavar='URL', default='https://ភាសាខ្មែរ.com/', help='Use alternate URL for pheasakhmer.com')
+    parser.add_argument('--local', action='store_true', help='Use local copy of pheasakhmer.com')
     args = parser.parse_args()
+
+    if args.local:
+        url = 'http://localhost:8050/pheasakhmer.com/'
+    else:
+        url = 'https://ភាសាខ្មែរ.com/'
 
     # create_driver(args.snap)
     if args.snap:
@@ -37,5 +42,5 @@ if __name__ == '__main__':
         config.driver = webdriver.Firefox()
 
     runKeyman()
-    runPheasaKhmer(args.url)
+    runPheasaKhmer(url)
     config.driver.quit()

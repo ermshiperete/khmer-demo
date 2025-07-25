@@ -41,16 +41,16 @@ def create_fullpage_overlay():
         """)
 
 
-def create_overlay():
+def _create_overlay(top='80%'):
     # https://www.w3schools.com/howto/howto_css_overlay.asp
-    config.driver.execute_script("""
+    config.driver.execute_script(f"""
         const overlay = document.createElement("div");
         overlay.id = 'demo-overlay';
         overlay.style['position'] = 'fixed';
         overlay.style['display'] = 'none';
         overlay.style['width'] = '100%';
-        overlay.style['height'] = '100%';
-        overlay.style['top'] = 0;
+        overlay.style['height'] = '20%';
+        overlay.style['top'] = '{top}';
         overlay.style['left'] = 0;
         overlay.style['right'] = 0;
         overlay.style['bottom'] = 0;
@@ -60,20 +60,22 @@ def create_overlay():
         const text = document.createElement("div");
         text.id = "demo-text";
         text.style['position'] = 'absolute';
-        text.style['top'] = '80%';
-        text.style['left'] = '50%';
-        text.style['font-size'] = '80px';
+        text.style['top'] = 0;
+        text.style['left'] = '10%';
+        text.style['font-size'] = '40px';
         text.style['color'] = 'red';
-        text.style['transform'] = 'translate(-50%,-50%)';
-        text.style['-ms-transform'] = 'translate(-50%,-50%)';
+        text.style['text-align'] = 'center';
+        text.style['margin'] = 0;
+        // text.style['transform'] = 'translate(-50%,-50%)';
+        // text.style['-ms-transform'] = 'translate(-50%,-50%)';
         overlay.appendChild(text);
         document.body.appendChild(overlay);
         """)
 
 
-def set_overlay_text(text):
+def _set_overlay_text(text, top):
     if len(config.driver.find_elements(By.ID, 'demo-overlay')) <= 0:
-        create_overlay()
+        _create_overlay(top)
 
     config.driver.execute_script(f"""
         document.getElementById('demo-text').innerText = '{text}';
@@ -85,10 +87,11 @@ def hide_overlay():
     config.driver.execute_script("document.getElementById('demo-overlay').style['display'] = 'none';")
 
 
-def show_overlay(text, duration):
-    set_overlay_text(text)
-    time.sleep(duration)
-    hide_overlay()
+def show_overlay(text, duration, hide=True, top=None):
+    _set_overlay_text(text, top)
+    if hide:
+        wait(duration)
+        hide_overlay()
 
 
 def show_page_typewriter(text, hide):
@@ -116,7 +119,7 @@ def show_page_typewriter(text, hide):
 
         typeWriter();
         """)
-    time.sleep(waittime)
+    wait(waittime)
     if hide:
         config.driver.execute_script("document.getElementById('demo-fullpage-overlay').style['display'] = 'none';")
 
@@ -130,7 +133,7 @@ def show_page(text, hide, waittime):
         const textDiv = document.getElementById('demo-fullpage-text');
         textDiv.innerHTML = '{text}';
         """)
-    time.sleep(waittime)
+    wait(waittime)
     if hide:
         config.driver.execute_script("document.getElementById('demo-fullpage-overlay').style['display'] = 'none';")
 

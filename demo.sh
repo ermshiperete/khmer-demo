@@ -27,11 +27,7 @@ while [[ $# -gt 0 ]]; do
       ;;
     --snap) ARGS+=(--snap) ;;
     --local)
-      echo "Starting local webserver for pheasakhmer.com..."
-      trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT
-      python3 -m http.server --directory pheasakhmer.com --bind 127.0.0.1 8051 &
-      jobs
-      ARGS+=(--url http://localhost:8051)
+      ARGS+=(--local)
       ;;
     *)
       ARGS+=("$1")
@@ -40,10 +36,10 @@ while [[ $# -gt 0 ]]; do
   shift
 done
 
-# Start webserver for Keyman presentation
-echo "Starting webserver for Keyman presentation..."
+# Start webserver for demo
+echo "Starting webserver for demo..."
 trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT
-python3 -m http.server --directory keyman --bind 127.0.0.1 8050 &
+python3 -m http.server --bind 127.0.0.1 8050 &
 jobs
 
 # Start demo
