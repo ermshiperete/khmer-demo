@@ -3,64 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <title>Keyman Logo</title>
-  <style>
-    body {
-      display: flex;
-      height: 100vh;
-      justify-content: center;
-      align-items: center;
-      background: #fff;
-      font-family: Georgia, 'Times New Roman', Times, serif;
-      font-size: 40px;
-      overflow: hidden;
-    }
-    .animate-in {
-      animation: fadeIn 2s ease-in;
-    }
-    .animate-out {
-      transition: opacity 2s;
-      opacity: 0;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    #second {
-      top: 0;
-      left: 0;
-      position: fixed;
-      width: 100%;
-    }
-    #second div {
-      position: absolute;
-      margin: 80px;
-    }
-    img {
-      display: block;
-      margin-left: auto;
-      max-width: 100%;
-      height: 120px;
-      right: 0;
-    }
-    .hidden {
-      display: none;
-    }
-    .right {
-      display: block;
-      margin-left: auto;
-      right: 0;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="keyman.css" />
 </head>
 <body>
-  <div id="first">
-    <img src="keyman_banner.svg" alt="Keyman Logo" style="max-width: 100%; height: auto;">
+  <div id="pg1" class="hidden vertical-center">
+    <img src="img/keyman_banner.svg" alt="Keyman Logo" style="max-width: 100%; height: auto;">
   </div>
-  <div id="second" class="hidden">
-    <div>
-      <img class="right" src="keyman_banner.svg" alt="Keyman Logo"/>
-      <p>Keyman erlaubt es, Tastaturlayouts für beliebige Sprachen zu erstellen und auf allen Plattformen (Windows, Mac, Linux, Android, iOS und im Browser) zu verwenden.</p>
-      <p>Keyman.com bietet 1000 Tastaturlayouts für über 2500 Sprachen.</p>
+  <div id="pg2" class="page hidden">
+    <div class="container">
+      <div class="vertical-center">
+        <img class="rightfloat" src="img/smartphone_us.png" alt="Smartphone"/>
+        <div class="vertical-center">
+          <p>Stell dir vor: du möchtest eine Nachricht auf dem Smartphone schreiben. Doch Moment mal &ndash; wo sind denn die Umlaute ä, ö, ü und ß?</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="pg3" class="page hidden">
+    <div class="container">
+      <div class="vertical-center">
+        <p>Dann halt am Laptop. Doch auch auf der Laptoptastatur findest du zwar einige der Buchstaben, die du brauchst, aber längst nicht alle, die in deiner Sprache vorkommen.</p>
+        <img src="img/keyboard_en-us.png" alt="Laptop Keyboard" />
+      </div>
+    </div>
+  </div>
+  <div id="pg4" class="page hidden">
+    <div class="container">
+      <div class="vertical-center">
+        <p>Dir kommt das etwas abgefahren vor? Schwer vorstellbar? Stimmt. Denn als Leute, die Deutsch reden und schreiben, haben wir das Problem mit der fehlenden Tastatur heutzutage (meist) nicht.</p>
+      </div>
+    </div>
+  </div>
+  <div id="pg5" class="page hidden">
+    <div class="container">
+      <div class="vertical-center">
+        <p>Manche werden sich noch an die Frühzeit der Computer erinnern: Häufig gab es nur eine englische Tastatur. Deutsche Umlaute konnten also nicht geschrieben werden. Man behalf sich mit „ae“ statt „ä“ oder„ss“ statt „ß“... </p>
+        <p>So etwas funktioniert bei Sprachen mit nicht-lateinischen Schriftsystemen leider nicht. Und deshalb ist es hart, aber wahr: Viele Sprachen, die auf der Erde gesprochen werden, kann man nicht auf digitalen Endgeräten tippen, weil es keine Tastaturen für diese Sprachen gibt.</p>
+      </div>
+    </div>
+  </div>
+  <div id="pg6" class="page hidden">
+    <div class="container">
+      <div class="vertical-center">
+        <img class="right" src="img/keyman_banner.svg" alt="Keyman Logo"/>
+        <p>Hier kommt Keyman ins Spiel: Keyman erlaubt es, Tastaturlayouts für beliebige Sprachen zu erstellen und auf allen Plattformen (Windows, Mac, Linux, Android, iOS und im Browser) zu verwenden.</p>
+        <p>Keyman.com bietet 1000 Tastaturlayouts für über 2500 Sprachen.</p>
+      </div>
     </div>
   </div>
 </body>

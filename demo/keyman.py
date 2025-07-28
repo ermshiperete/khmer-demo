@@ -60,18 +60,41 @@ class Keyman:
     def _load_page(self, url):
         config.driver.get(url)
 
-    def _presentation_p1(self, url):
-        self._load_page(url)
-        wait(5)
-        config.driver.execute_script("""
-            document.getElementById('first').classList.add('animate-out');
-            const second = document.getElementById('second')
-            second.classList.remove('hidden');
-            second.classList.add('animate-in');
+    def _next_page(self, new, waittime):
+        config.driver.execute_script(f"""
+            const newPage = 'pg{new}';
+            const oldElems = document.querySelector(".current");
+            if (oldElems) {{
+                oldElems.classList.remove('current');
+                oldElems.classList.add('animate-out');
+                oldElems.classList.add('hidden');
+            }}
+            const newElem = document.getElementById(newPage);
+            newElem.classList.remove('hidden');
+            newElem.classList.add('curent');
+            newElem.classList.add('animate-in');
             """)
-        wait(15)
-        config.driver.execute_script("""
-            document.getElementById('second').classList.add('animate-out');
+        wait(waittime)
+        config.driver.execute_script(f"""
+            const newElem = document.getElementById('pg{new}');
+            newElem.classList.add('animate-out');
+            """)
+
+    def _show_presentation_page(self, url):
+        self._load_page(url)
+        wait(2)
+        self._next_page(1, 5)
+        self._next_page(2, 13)
+        self._next_page(3, 13)
+        self._next_page(4, 13)
+        self._next_page(5, 18)
+        self._next_page(6, 15)
+        config.driver.execute_script(f"""
+            const oldElems = document.getElementsByClassName('current');
+            if (oldElems && oldElems.length > 0) {{
+                oldElems.classList.remove('current');
+                oldElems.classList.add('hidden');
+            }}
             """)
 
     def _get_textarea_and_type(self, keys):
@@ -145,6 +168,6 @@ class Keyman:
         hide_overlay()
 
     def rundemo(self, url):
-        self._presentation_p1(url)
+        self._show_presentation_page(url)
         self._search_keyman_com()
         self._keyman_rules()
