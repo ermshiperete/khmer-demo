@@ -4,7 +4,7 @@ set -eu
 
 DRIVER_VERSION=v0.36.0
 
-if [[ "$1" == "--help" || "$1" == "-h" ]]; then
+if [[ "${1:-}" == "--help" || "${1:-}" == "-h" ]]; then
   echo "Usage: $0 [--help] [--uninstall] [--snap]"
   echo ""
   echo "Install everything needed to run the demo"
@@ -21,10 +21,10 @@ python3 -m venv venv
 # shellcheck disable=SC1091
 . venv/bin/activate
 
-if [[ "$1" == "--uninstall" ]]; then
+if [[ "${1:-}" == "--uninstall" ]]; then
   rm -rf venv
   exit 0
-elif [[ "$1" == "--snap" ]]; then
+elif [[ "${1:-}" == "--snap" ]]; then
   touch venv/usesnap
 else
   GECKODRIVER=geckodriver-${DRIVER_VERSION}-linux64.tar.gz
