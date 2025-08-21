@@ -87,8 +87,8 @@ class Keyman:
         self._next_page(2, 13)
         self._next_page(3, 13)
         self._next_page(4, 13)
-        self._next_page(5, 18)
-        self._next_page(6, 15)
+        self._next_page(5, 23)
+        self._next_page(6, 18)
         config.driver.execute_script(f"""
             const oldElems = document.getElementsByClassName('current');
             if (oldElems && oldElems.length > 0) {{
