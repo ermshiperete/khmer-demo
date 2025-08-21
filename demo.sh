@@ -23,11 +23,15 @@ while [[ $# -gt 0 ]]; do
       echo "  -h, --help  show this help message and exit"
       echo "  --snap      Use Snap Firefox"
       echo "  --local     use local copy of pheasakhmer.com"
+      echo "  --loop      run in a loop"
       exit 0
       ;;
     --snap) ARGS+=(--snap) ;;
     --local)
       ARGS+=(--local)
+      ;;
+    --loop)
+      ARGS+=(--loop)
       ;;
     *)
       ARGS+=("$1")
