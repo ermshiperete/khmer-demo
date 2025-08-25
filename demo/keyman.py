@@ -54,7 +54,7 @@ class Keyman:
     def _type(self, keys):
         for char in keys:
             self.__show_pressed_key(char, True)
-            time.sleep(0.5)
+            time.sleep(2)
             self.__show_pressed_key(char, False)
 
     def _load_page(self, url):
@@ -113,7 +113,7 @@ class Keyman:
     def _increase_font_size(self):
         slider = config.driver.find_element(By.ID, 'slider')
         actions = ActionChains(config.driver)
-        actions.move_to_element(slider).click_and_hold().move_by_offset(0, 250).release().perform()
+        actions.move_to_element(slider).click_and_hold().move_by_offset(0, 300).release().perform()
         config.driver.execute_script("""
             const btn = document.getElementById('kmw_btn_osk');
             if (btn.classList.contains('kmw_btn_disabled')) {
@@ -124,20 +124,27 @@ class Keyman:
 
     def _search_keyman_com(self):
         self._load_page('https://keyman.com/')
+        show_overlay('Suche nach einer Tastatur für Amharisch', 0, False, transparent=True)
         config.driver.find_element(By.XPATH, '//div[@id="keyboards"]').click()
         config.driver.find_element(By.ID, 'language-search').send_keys('amharic')
         config.driver.find_element(By.ID, 'search-submit').click()
-        wait(2)
-        config.driver.find_element(By.XPATH, '//a[text()="GFF Ethiopic"]').click()
-        wait(2)
-        config.driver.find_element(By.XPATH, '//div[@id="try-keymanweb-link"]/div/a').click()
-        wait(2)
+        show_overlay('Suche nach einer Tastatur für Amharisch', 0, False, transparent=True)
+        wait(5)
+        gff_ethiopic = config.driver.find_element(By.XPATH, '//a[text()="GFF Ethiopic"]')
+        config.driver.execute_script("arguments[0].parentElement.parentElement.previousSibling.scrollIntoView();", gff_ethiopic)
+        gff_ethiopic.click()
+        show_overlay('Suche nach einer Tastatur für Amharisch', 0, False, transparent=True)
+        wait(5)
+        button = config.driver.find_element(By.XPATH, '//div[@id="try-keymanweb-link"]/div/a')
+        config.driver.execute_script("arguments[0].scrollIntoView();", button)
+        button.click()
+        wait(5)
         footerRect = config.driver.find_element(By.CLASS_NAME, 'footer').rect
         show_overlay('„Hallo“ (ጤና ይስጥልኝ) auf Amharisch', 5, False, top=footerRect['y'] + footerRect['height'])
         self._increase_font_size()
         self._enable_keyboard('GFF Ethiopic')
         self._get_textarea_and_type('Tiena ysTlN')
-        wait(2)
+        wait(5)
         self._disable_keyboard()
         hide_overlay()
 
@@ -156,14 +163,14 @@ class Keyman:
         hide_overlay()
         self._load_page('https://keymanweb.com/#km,Keyboard_khmer_angkor')
         config.driver.refresh()
-        wait(1)
+        wait(3)
         self._disable_keyboard()
         show_page('Keyman ist besonders für komplexe Schreibsysteme hilfreich, wie z.B. für Khmer, eine Sprache, die in Kambodscha gesprochen und geschrieben wird.', True, 8)
         show_overlay('ខ្មែរ („Khmer“) in Khmer geschrieben', 5, False)
         self._increase_font_size()
         self._enable_keyboard('Khmer Angkor')
         self._get_textarea_and_type('xjmEr')
-        wait(2)
+        wait(5)
         self._disable_keyboard()
         hide_overlay()
 
