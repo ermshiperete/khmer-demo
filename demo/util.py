@@ -41,7 +41,12 @@ def create_fullpage_overlay():
         """)
 
 
-def _create_overlay(top='80%'):
+def _create_overlay(top='80%', black=False, transparency=0.5):
+    if black:
+        color = f'rgba(0,0,0,{transparency})'
+    else:
+        color = f'rgba(255,255,255,{transparency})'
+
     # https://www.w3schools.com/howto/howto_css_overlay.asp
     config.driver.execute_script(f"""
         const overlay = document.createElement("div");
@@ -54,28 +59,31 @@ def _create_overlay(top='80%'):
         overlay.style['left'] = 0;
         overlay.style['right'] = 0;
         overlay.style['bottom'] = 0;
-        // overlay.style['background-color'] = 'rgba(0,0,0,0.5)';
+        overlay.style['background-color'] = '{color}';
         overlay.style['z-index'] = 2;
         overlay.style['cursor'] = 'pointer';
         const text = document.createElement("div");
         text.id = "demo-text";
         text.style['position'] = 'absolute';
-        text.style['top'] = 0;
+        text.style['top'] = '50%';
         text.style['left'] = '10%';
-        text.style['font-size'] = '40px';
+        text.style['font-size'] = '60px';
         text.style['color'] = 'red';
         text.style['text-align'] = 'center';
         text.style['margin'] = 0;
-        // text.style['transform'] = 'translate(-50%,-50%)';
-        // text.style['-ms-transform'] = 'translate(-50%,-50%)';
+        text.style['transform'] = 'translateY(-50%)';
+        text.style['-ms-transform'] = 'translateY(-50%)';
         overlay.appendChild(text);
         document.body.appendChild(overlay);
         """)
 
 
-def _set_overlay_text(text, top):
+def _set_overlay_text(text, top, transparent=False):
     if len(config.driver.find_elements(By.ID, 'demo-overlay')) <= 0:
-        _create_overlay(top)
+        if transparent:
+            _create_overlay(top, black=True, transparency=0.8)
+        else:
+            _create_overlay(top)
 
     config.driver.execute_script(f"""
         document.getElementById('demo-text').innerText = '{text}';
@@ -87,8 +95,8 @@ def hide_overlay():
     config.driver.execute_script("document.getElementById('demo-overlay').style['display'] = 'none';")
 
 
-def show_overlay(text, duration, hide=True, top=None):
-    _set_overlay_text(text, top)
+def show_overlay(text, duration, hide=True, top=None, transparent=False):
+    _set_overlay_text(text, top, transparent)
     if hide:
         wait(duration)
         hide_overlay()
