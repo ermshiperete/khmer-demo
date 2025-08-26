@@ -30,12 +30,12 @@ def create_fullpage_overlay():
         text.id = "demo-fullpage-text";
         text.style['position'] = 'absolute';
         text.style['top'] = '50%';
-        text.style['left'] = '50%';
-        text.style['font-size'] = '40px';
+        text.style['left'] = '30%';
+        text.style['font-size'] = '60px';
         text.style['color'] = 'black';
-        text.style['transform'] = 'translate(-50%,-50%)';
-        text.style['-ms-transform'] = 'translate(-50%,-50%)';
-        text.style['font-family'] = 'Times';
+        text.style['transform'] = 'translate(-30%,-50%)';
+        text.style['-ms-transform'] = 'translate(-30%,-50%)';
+        text.style['font-family'] = '"Cabin", sans-serif';
         overlay.appendChild(text);
         document.body.appendChild(overlay);
         """)
@@ -118,7 +118,6 @@ def show_page_typewriter(text, hide):
 
         function typeWriter() {{
             if (i < text.length) {{
-                console.log('i=' + i + ', text[i]=' + text.charAt(i));
                 textDiv.innerHTML += text.charAt(i);
                 i++;
                 setTimeout(typeWriter, speed);

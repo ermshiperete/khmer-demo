@@ -138,6 +138,7 @@ class Keyman:
         button = config.driver.find_element(By.XPATH, '//div[@id="try-keymanweb-link"]/div/a')
         config.driver.execute_script("arguments[0].scrollIntoView();", button)
         button.click()
+        show_overlay('Amharische Tastatur', 0, False, transparent=True)
         wait(5)
         footerRect = config.driver.find_element(By.CLASS_NAME, 'footer').rect
         show_overlay('„Hallo“ (ጤና ይስጥልኝ) auf Amharisch', 5, False, top=footerRect['y'] + footerRect['height'])
@@ -147,11 +148,12 @@ class Keyman:
         wait(5)
         self._disable_keyboard()
         hide_overlay()
+        return
 
     def _keyman_rules(self):
-        show_page('Regeln erlauben es, Zeichen je nach Kontext und gedrückter Taste zu ändern.', True, 5)
+        show_page('Für jede Sprache werden in Keyman Regeln hinterlegt. Diese Regeln erlauben es, Zeichen je nach Kontext und gedrückter Taste zu ändern. Die Regeln sind im Hintergrund in der Tastatur aktiv.', True, 10)
         footerRect = config.driver.find_element(By.CLASS_NAME, 'footer').rect
-        show_overlay('Mehrfaches Drücken von Shift+S erzeugt verschiedene Zeichen.', 5, False, top=footerRect['y'] + footerRect['height'])
+        show_overlay('Zum Beispiel: Mehrfaches Drücken von Shift+S erzeugt verschiedene Zeichen.', 5, False, top=footerRect['y'] + footerRect['height'])
         self._enable_keyboard('GFF Ethiopic')
         self._get_textarea_and_type('S')
         wait(1)
@@ -165,7 +167,7 @@ class Keyman:
         config.driver.refresh()
         wait(3)
         self._disable_keyboard()
-        show_page('Keyman ist besonders für komplexe Schreibsysteme hilfreich, wie z.B. für Khmer, eine Sprache, die in Kambodscha gesprochen und geschrieben wird.', True, 8)
+        show_page('Keyman ist besonders für komplexe Schreibsysteme ein geniales Werkzeug. Ein Beispiel dafür ist Khmer, eine Sprache, die in Kambodscha gesprochen und geschrieben wird.', True, 8)
         show_overlay('ខ្មែរ („Khmer“) in Khmer geschrieben', 5, False)
         self._increase_font_size()
         self._enable_keyboard('Khmer Angkor')
