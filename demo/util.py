@@ -31,11 +31,11 @@ def create_fullpage_overlay():
         text.style['position'] = 'absolute';
         text.style['top'] = '50%';
         text.style['left'] = '50%';
-        text.style['font-size'] = '40px';
+        text.style['font-size'] = '60px';
         text.style['color'] = 'black';
         text.style['transform'] = 'translate(-50%,-50%)';
         text.style['-ms-transform'] = 'translate(-50%,-50%)';
-        text.style['font-family'] = 'Times';
+        text.style['font-family'] = '"Cabin", sans-serif';
         overlay.appendChild(text);
         document.body.appendChild(overlay);
         """)

@@ -4,8 +4,8 @@ body {
   justify-content: center;
   align-items: center;
   background: #fff;
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  font-size: 4em;
+  font-family: 'Cabin', sans-serif;
+  font-size: 60px;
   overflow: hidden;
 }
 

@@ -138,6 +138,7 @@ class Keyman:
         button = config.driver.find_element(By.XPATH, '//div[@id="try-keymanweb-link"]/div/a')
         config.driver.execute_script("arguments[0].scrollIntoView();", button)
         button.click()
+        show_overlay('Amharische Tastatur', 0, False, transparent=True)
         wait(5)
         footerRect = config.driver.find_element(By.CLASS_NAME, 'footer').rect
         show_overlay('„Hallo“ (ጤና ይስጥልኝ) auf Amharisch', 5, False, top=footerRect['y'] + footerRect['height'])
