@@ -88,7 +88,7 @@ class Keyman:
         self._next_page(3, 13)
         self._next_page(4, 13)
         self._next_page(5, 23)
-        self._next_page(6, 18)
+        self._next_page(6, 23)
         config.driver.execute_script(f"""
             const oldElems = document.getElementsByClassName('current');
             if (oldElems && oldElems.length > 0) {{
@@ -96,6 +96,16 @@ class Keyman:
                 oldElems.classList.add('hidden');
             }}
             """)
+
+    def continue_presentation(self, url):
+        self._load_page(url)
+        self._next_page(7, 18)
+        self._next_page(8, 18)
+        self._next_page(9, 15)
+        self._next_page(10, 15)
+        self._next_page(11, 10)
+        self._next_page(12, 15)
+        self._next_page(13, 15)
 
     def _get_textarea_and_type(self, keys):
         textarea = config.driver.find_element(By.ID, 'message')

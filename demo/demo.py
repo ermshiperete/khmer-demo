@@ -10,14 +10,42 @@ from pheasakhmer import PheasaKhmer
 from keyman import Keyman
 
 
-def runKeyman():
-    demo = Keyman()
-    demo.rundemo('http://localhost:8050/keyman/index.html')
+class Controller:
+    def __init__(self) -> None:
+        self.keymanUrl = 'http://localhost:8050/keyman/index.html'
+        self.keymanDemo = Keyman()
 
+    def _runKeyman(self) -> None:
+        self.keymanDemo.rundemo(self.keymanUrl)
 
-def runPheasaKhmer(url):
-    demo = PheasaKhmer()
-    demo.rundemo(url)
+    def _runPheasaKhmer(self, url) -> None:
+        demo = PheasaKhmer()
+        demo.rundemo(url)
+
+    def _continueKeymanDemo(self) -> None:
+        self.keymanDemo.continue_presentation(self.keymanUrl)
+
+    def runDemo(self):
+        # create_driver(args.snap)
+        if args.snap:
+            opts = Options()
+            firefox_path = "/snap/firefox/current/usr/lib/firefox/firefox"
+            opts.binary_location = firefox_path
+            geckodriver_path = Service(executable_path="/snap/firefox/current/usr/lib/firefox/geckodriver")
+            config.driver = webdriver.Chrome(service=geckodriver_path, options=opts)
+        else:
+            config.driver = webdriver.Firefox()
+
+        config.driver.fullscreen_window()
+
+        while(True):
+            self._runKeyman()
+            self._runPheasaKhmer(url)
+            self._continueKeymanDemo()
+            if not args.loop:
+                break
+
+        config.driver.quit()
 
 
 if __name__ == '__main__':
@@ -32,22 +60,5 @@ if __name__ == '__main__':
     else:
         url = 'https://ភាសាខ្មែរ.com/'
 
-    # create_driver(args.snap)
-    if args.snap:
-        opts = Options()
-        firefox_path = "/snap/firefox/current/usr/lib/firefox/firefox"
-        opts.binary_location = firefox_path
-        geckodriver_path = Service(executable_path="/snap/firefox/current/usr/lib/firefox/geckodriver")
-        config.driver = webdriver.Chrome(service=geckodriver_path, options=opts)
-    else:
-        config.driver = webdriver.Firefox()
-
-    config.driver.fullscreen_window()
-
-    while(True):
-        runKeyman()
-        runPheasaKhmer(url)
-        if not args.loop:
-            break
-
-    config.driver.quit()
+    controller = Controller()
+    controller.runDemo()
