@@ -85,7 +85,6 @@ class Keyman:
 
     def _show_presentation_page(self, url):
         self._load_page(url)
-        # wait(2)
         self._next_page(1, 5)
         self._next_page(2, 13)
         self._next_page(3, 13)
@@ -93,9 +92,11 @@ class Keyman:
         self._next_page(5, 30)
         self._next_page(6, 30)
         config.driver.execute_script(f"""
-            const oldElems = document.getElementsByClassName('current');
-            if (oldElems && oldElems.length > 0) {{
+            const oldElems = document.querySelector(".current");
+            if (oldElems) {{
                 oldElems.classList.remove('current');
+                oldElems.classList.remove('animate-in');
+                oldElems.classList.remove('animate-out');
                 oldElems.classList.add('hidden');
             }}
             """)
@@ -109,6 +110,15 @@ class Keyman:
         self._next_page(11, 10)
         self._next_page(12, 15)
         self._next_page(13, 15)
+        config.driver.execute_script(f"""
+            const oldElems = document.querySelector(".current");
+            if (oldElems) {{
+                oldElems.classList.remove('current');
+                oldElems.classList.remove('animate-in');
+                oldElems.classList.remove('animate-out');
+                oldElems.classList.add('hidden');
+            }}
+            """)
 
     def _get_textarea_and_type(self, keys):
         textarea = config.driver.find_element(By.ID, 'message')
