@@ -82,13 +82,13 @@ class Keyman:
 
     def _show_presentation_page(self, url):
         self._load_page(url)
-        wait(2)
+        # wait(2)
         self._next_page(1, 5)
-        self._next_page(2, 13)
-        self._next_page(3, 13)
-        self._next_page(4, 13)
-        self._next_page(5, 23)
-        self._next_page(6, 23)
+        self._next_page(2, 15)
+        self._next_page(3, 15)
+        self._next_page(4, 15)
+        self._next_page(5, 30)
+        self._next_page(6, 30)
         config.driver.execute_script(f"""
             const oldElems = document.getElementsByClassName('current');
             if (oldElems && oldElems.length > 0) {{
@@ -99,10 +99,10 @@ class Keyman:
 
     def continue_presentation(self, url):
         self._load_page(url)
-        self._next_page(7, 18)
-        self._next_page(8, 18)
-        self._next_page(9, 15)
-        self._next_page(10, 15)
+        self._next_page(7, 20)
+        self._next_page(8, 25)
+        self._next_page(9, 20)
+        self._next_page(10, 25)
         self._next_page(11, 10)
         self._next_page(12, 15)
         self._next_page(13, 15)
