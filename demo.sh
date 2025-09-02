@@ -1,6 +1,9 @@
 #!/bin/bash
 set -eu
 
+SCRIPT_DIR=$(realpath "$(dirname "$0")")
+cd "${SCRIPT_DIR}"
+
 if [[ ! -d venv ]]; then
   ./install.sh "$@"
 fi
