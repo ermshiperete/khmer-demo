@@ -176,9 +176,15 @@ class Keyman:
     def _keyman_rules(self):
         show_page('Für jede Sprache werden in Keyman Regeln hinterlegt. Diese Regeln erlauben es, Zeichen je nach Kontext und gedrückter Taste zu ändern. Die Regeln sind im Hintergrund in der Tastatur aktiv.', True, 10)
         footerRect = config.driver.find_element(By.CLASS_NAME, 'footer').rect
-        show_overlay('Zum Beispiel: Mehrfaches Drücken von Shift+S erzeugt verschiedene Zeichen.', 5, False, top=footerRect['y'] + footerRect['height'])
+        show_overlay('Zum Beispiel: Mehrfaches Drücken von Shift+S<br/>erzeugt verschiedene Zeichen.', 5, False, top=footerRect['y'] + footerRect['height'])
         self._enable_keyboard('GFF Ethiopic')
         self._get_textarea_and_type('S')
+        wait(1)
+        self._type('S')
+        wait(1)
+        self._type('S')
+        wait(1)
+        self._type('S')
         wait(1)
         self._type('S')
         wait(1)
